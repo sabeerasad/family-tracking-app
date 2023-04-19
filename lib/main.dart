@@ -117,9 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(
-          left: 30,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
