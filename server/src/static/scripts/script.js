@@ -8,10 +8,10 @@ $(document).ready(function() {
         socketio.emit('my_event', {data: 'connected to the SocketServer...'});
     });
 
-    socketio.on('my_response', function(msg, cb) {
+    socketio.on('my_response', function(msg, callback) {
         $('#log').append('<br>' + $('<div/>').text('logs #' + msg.count + ': ' + msg.data).html());
-        // if (cb)
-        //     cb();
+        if (callback)
+            callback();
     });
     $('form#emit').submit(function(event) {
         socketio.emit('my_event', {data: $('#emit_data').val()});
