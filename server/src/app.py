@@ -45,4 +45,4 @@ def test_message(message):
 
 
 if __name__ == '__main__':
-    socketio.run(app=app, port=3000, debug=True)
+    socketio.run(host='localhost', app=app, port=3000, debug=True)

@@ -33,18 +33,18 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   final IO.Socket socket = IO.io(
-    'http://127.0.0.1:3000',
+    'http://localhost:3000',
     IO.OptionBuilder()
         .setTransports(['websocket'])
-        .disableAutoConnect()
         .build(),
   );
 
   connectSocket() {
-    socket.connect();
-    socket.onConnect((_) => print("CONNECTION ESTABLISHED"));
-    socket.emit('my_event', {
-      'data': 'Flutter Connected',
+    socket.onConnect((_) {
+      print("CONNECTION ESTABLISHED");
+      socket.emit('my_event', {
+        'data': 'Flutter Connected',
+      });
     });
   }
 

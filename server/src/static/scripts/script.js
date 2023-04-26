@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
     // namespace = '/test';
-    var socketio = io.connect('http://127.0.0.1:3000');
+    var socketio = io.connect('http://localhost:3000');
 
     socketio.on('connect', function() {
         socketio.emit('my_event', {data: 'connected to the SocketServer...'});
