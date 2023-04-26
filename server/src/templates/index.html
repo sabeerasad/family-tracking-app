@@ -6,10 +6,9 @@
     <script src="//code.jquery.com/jquery-1.12.4.min.js"></script> 
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='./scripts/script.js') }}" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='./styles/stylesheet.css') }}">
 </head>
 <body>
-    <h1>Socket</h1>
+    <!-- <h1>Socket</h1>
     <form id="emit" method="POST" action='#'>
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
         <input type="submit" value="Send Message">
@@ -17,12 +16,12 @@
     <form id="broadcast" method="POST" action='#'>
         <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
         <input type="submit" value="Send Broadcast Message">
-    </form>
+    </form> -->
 
-    <form id="disconnect" method="POST" action="#">
+    <!-- <form id="disconnect" method="POST" action="#">
         <input type="submit" value="Disconnect Server">
-    </form>
-    <h2>Logs</h2>
+    </form> -->
+    <h1>Logs</h1>
     <div id="log" ></div>
 </body>
 </html>
