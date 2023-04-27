@@ -2,13 +2,14 @@
 $(document).ready(function() {
 
     // namespace = '/test';
-    var socketio = io.connect('http://localhost:3000');
+    var socketio = io.connect('http://127.0.0.1:3000/test');
 
     socketio.on('connect', function() {
-        socketio.emit('my_event', {data: 'connected to the SocketServer...'});
+        socketio.emit('my_event', 'connected to socket');
     });
 
     socketio.on('my_response', function(msg, callback) {
+        console.log('my_event triggered');
         $('#log').append('<br>' + $('<div/>').text('logs #' + msg.count + ': ' + msg.data).html());
         if (callback)
             callback();

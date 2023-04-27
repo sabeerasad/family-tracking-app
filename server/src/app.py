@@ -1,5 +1,5 @@
 # copied from https://medium.com/swlh/implement-a-websocket-using-flask-and-socket-io-python-76afa5bbeae1
-from flask import Flask, render_template, session, copy_current_request_context
+from flask import Flask, render_template, session, copy_current_request_context # request
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
 
@@ -17,11 +17,12 @@ def index():
     return render_template('index.html', async_mode=socketio.async_mode)
 
 
-@socketio.on('my_event')
+@socketio.on('my_event', namespace='/test')
 def test_message(message):
+    # print(request.sid)
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
-         {'data': message['data'], 'count': session['receive_count']})
+         {'data': message, 'count': session['receive_count']}, broadcast=True)
 
 
 # @socketio.on('my_broadcast_event', namespace='/test')
@@ -45,4 +46,4 @@ def test_message(message):
 
 
 if __name__ == '__main__':
-    socketio.run(host='localhost', app=app, port=3000, debug=True)
+    socketio.run(host='127.0.0.1', app=app, port=3000, debug=True)
