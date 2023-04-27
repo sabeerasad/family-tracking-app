@@ -40,10 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
   connectSocket() {
     socket.onConnect((_) {
       print("CONNECTION ESTABLISHED");
-      socket.emit('my_event', 'flutter connected');
+      socket.emit('connection', {
+        'data': 'Flutter client connected',
+        'client': 'flutter',
+      });
     });
-    socket.on('my_response', (msg) {
-      print('CONNECTION ACKNOWLEDGED BY SERVER');
+  }
+
+  sendSocketCounter(int counter) {
+    socket.emit('my_event', {
+      'data': counter,
     });
   }
 
@@ -57,10 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+    sendSocketCounter(_counter);
   }
 
   void _decrementCounter() {
     setState(() => _counter--);
+    sendSocketCounter(_counter);
   }
 
   @override

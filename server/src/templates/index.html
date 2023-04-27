@@ -9,20 +9,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='./styles/stylesheet.css') }}">
 </head>
 <body>
-    <!-- <h1>Socket</h1>
-    <form id="emit" method="POST" action='#'>
-        <input type="text" name="emit_data" id="emit_data" placeholder="Message">
-        <input type="submit" value="Send Message">
+    <h1>Count: <span></span></h1>
+    <h2 id="log">Logs</h2>
+        <ul></ul>
+    <form action="POST" id="disconnect">
+        <input type="submit" value="Disconnect">
     </form>
-    <form id="broadcast" method="POST" action='#'>
-        <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
-        <input type="submit" value="Send Broadcast Message">
-    </form> -->
-
-    <!-- <form id="disconnect" method="POST" action="#">
-        <input type="submit" value="Disconnect Server">
-    </form> -->
-    <h1>Logs</h1>
-    <div id="log" ></div>
 </body>
 </html>

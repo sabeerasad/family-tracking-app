@@ -2,5 +2,10 @@ body {
     background-color: black;
     color: white;
     height: 100vh;
-    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 25vh;
 }

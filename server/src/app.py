@@ -17,12 +17,19 @@ def index():
     return render_template('index.html', async_mode=socketio.async_mode)
 
 
+@socketio.on('connection', namespace='/test')
+def acknowledge_connection(msg):
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('log_connection', 
+         {'data': msg['data'], 'count': session['receive_count'], 'client': msg['client']}, broadcast=True)
+
+
 @socketio.on('my_event', namespace='/test')
 def test_message(message):
     # print(request.sid)
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
-         {'data': message, 'count': session['receive_count']}, broadcast=True)
+         {'data': message['data'], 'count': session['receive_count']}, broadcast=True)
 
 
 # @socketio.on('my_broadcast_event', namespace='/test')
@@ -33,16 +40,16 @@ def test_message(message):
 #          broadcast=True)
 
 
-# @socketio.on('disconnect_request', namespace='/test')
-# def disconnect_request():
-#     @copy_current_request_context
-#     def can_disconnect():
-#         disconnect()
+@socketio.on('disconnect_request', namespace='/test')
+def disconnect_request():
+    @copy_current_request_context
+    def can_disconnect():
+        disconnect()
 
-#     session['receive_count'] = session.get('receive_count', 0) + 1
-#     emit('my_response',
-#          {'data': 'Disconnected!', 'count': session['receive_count']},
-#          callback=can_disconnect)
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Disconnected!', 'count': session['receive_count']},
+         callback=can_disconnect)
 
 
 if __name__ == '__main__':
