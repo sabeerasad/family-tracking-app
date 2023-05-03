@@ -1,33 +1,22 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class ClientSocket {
-  final String hostname;
-  final String namespace;
+final IO.Socket socket = IO.io(
+  'http://127.0.0.1:3000/test',
+  IO.OptionBuilder().setTransports(['websocket']).build(),
+);
 
-  late final _socket = _connect();
+void connectSocket() {
+  socket.onConnect((_) {
+    print("CONNECTION ESTABLISHED");
+    socket.emit('connection', {
+      'data': 'Flutter client connected',
+      'client': 'flutter',
+    });
+  });
+}
 
-  ClientSocket(
-    this.hostname, // * must include protocol and port
-    this.namespace,
-  ) {
-    final _socket = _connect();
-  }
-
-  IO.Socket _connect() {
-    IO.Socket socket = IO.io(
-      '$hostname/$namespace',
-      IO.OptionBuilder()
-          .setTransports(['websocket'])
-          .disableAutoConnect()
-          .build(),
-    );
-
-    socket.connect();
-
-    return socket;
-  }
-
-  void _emit(String eventName, Map<String, dynamic> data) {
-    _socket.emit(eventName, data);
-  }
+void sendSocketCounter(int counter) {
+  socket.emit('my_event', {
+    'data': counter,
+  });
 }

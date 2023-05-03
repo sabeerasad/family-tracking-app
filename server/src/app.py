@@ -8,8 +8,6 @@ async_mode = None
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
-# thread = None
-# thread_lock = Lock()
 
 
 @app.route('/')
@@ -32,14 +30,6 @@ def test_message(message):
          {'data': message['data'], 'count': session['receive_count']}, broadcast=True)
 
 
-# @socketio.on('my_broadcast_event', namespace='/test')
-# def test_broadcast_message(message):
-#     session['receive_count'] = session.get('receive_count', 0) + 1
-#     emit('my_response',
-#          {'data': message['data'], 'count': session['receive_count']},
-#          broadcast=True)
-
-
 @socketio.on('disconnect_request', namespace='/test')
 def disconnect_request():
     @copy_current_request_context
@@ -47,9 +37,9 @@ def disconnect_request():
         disconnect()
 
     session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
+    emit('log_connection',
          {'data': 'Disconnected!', 'count': session['receive_count']},
-         callback=can_disconnect)
+         callback=can_disconnect, broadcast=True)
 
 
 if __name__ == '__main__':

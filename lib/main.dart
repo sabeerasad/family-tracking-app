@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import './client/client.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,43 +33,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  final IO.Socket socket = IO.io(
-    'http://127.0.0.1:3000/test',
-    IO.OptionBuilder().setTransports(['websocket']).build(),
-  );
-
-  connectSocket() {
-    socket.onConnect((_) {
-      print("CONNECTION ESTABLISHED");
-      socket.emit('connection', {
-        'data': 'Flutter client connected',
-        'client': 'flutter',
-      });
-    });
-  }
-
-  sendSocketCounter(int counter) {
-    socket.emit('my_event', {
-      'data': counter,
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     connectSocket();
   }
 
+  @override
+  void dispose() {
+    socket.disconnect();
+    socket.dispose();
+    super.dispose();
+  }
+
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    setState(() => _counter++);
     sendSocketCounter(_counter);
   }
 
   void _decrementCounter() {
     setState(() => _counter--);
     sendSocketCounter(_counter);
+  }
+
+  void disconnect() {
+    socket.emit('disconnect_request');
   }
 
   @override
@@ -96,6 +85,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.white,
                 fontSize: 50,
               ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              onPressed: disconnect,
+              child: const Text('Disconnect'),
             ),
           ],
         ),
