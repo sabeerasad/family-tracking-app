@@ -1,4 +1,3 @@
-<!-- copied from https://medium.com/swlh/implement-a-websocket-using-flask-and-socket-io-python-76afa5bbeae1 -->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -9,10 +8,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='./styles/stylesheet.css') }}">
 </head>
 <body>
-    <h1>Count: <span></span></h1>
+    <h1 id="mobile-count">Mobile Count: <span></span></h1>
+    <h1 id="web-count">Web Count: <span></span></h1>
+    <form id="interact">
+        <button type="button" id="decrement">-</button>
+        <button type="button" id="increment">+</button>
+    </form>
     <h2 id="log">Logs</h2>
         <ul></ul>
-    <form action="POST" id="disconnect">
+    <form id="disconnect">
         <input type="submit" value="Disconnect">
     </form>
 </body>

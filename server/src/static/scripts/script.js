@@ -1,4 +1,3 @@
-// copied from https://medium.com/swlh/implement-a-websocket-using-flask-and-socket-io-python-76afa5bbeae1
 $(document).ready(function() {
 
     // namespace = '/test';
@@ -15,9 +14,9 @@ $(document).ready(function() {
         }
     });
 
-    socketio.on('my_response', function(msg, callback) {
+    socketio.on('response-to-mobile', function(msg, callback) {
         let count = msg.data;
-        $('h1 span').text(count);
+        $('#mobile-count > span').text(count);
         if (callback)
             callback();
     })
@@ -26,12 +25,18 @@ $(document).ready(function() {
         socketio.emit('disconnect_request');
         return false;
     });
+
+    let counter = 0; // TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
+
+    $('#increment').click(function() {
+        counter++;
+        $('#web-count > span').text(counter);
+        socketio.emit('');
+    });
+
+    $('#decrement').click(function() {
+        counter--;
+        $('#web-count > span').text(counter);
+        socketio.emit('');
+    });
 });
-//     $('form#emit').submit(function(event) {
-//         socketio.emit('my_event', {data: $('#emit_data').val()});
-//         return false;
-//     });
-//     $('form#broadcast').submit(function(event) {
-//         socketio.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
-//         return false;
-//     });

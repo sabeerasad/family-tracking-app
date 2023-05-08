@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import './client/client.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -31,7 +29,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _mobCount = 0;
+  int _webCount = 0;
 
   @override
   void initState() {
@@ -47,18 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _incrementCounter() {
-    setState(() => _counter++);
-    sendSocketCounter(_counter);
+    setState(() => _mobCount++);
+    sendSocketCounter(_mobCount);
   }
 
   void _decrementCounter() {
-    setState(() => _counter--);
-    sendSocketCounter(_counter);
+    setState(() => _mobCount--);
+    sendSocketCounter(_mobCount);
   }
 
-  void disconnect() {
-    socket.emit('disconnect_request');
-  }
+  void disconnect() => socket.emit('disconnect_request');
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Mobile Count',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -80,7 +77,25 @@ class _MyHomePageState extends State<MyHomePage> {
               textAlign: TextAlign.center,
             ),
             Text(
-              '$_counter',
+              '$_mobCount',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 50,
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              'Web Count',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              '$_webCount',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 50,
