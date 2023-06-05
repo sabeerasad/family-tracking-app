@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // namespace = '/test';
-    var socketio = io.connect('http://127.0.0.1:3000/test');
+    var socketio = io.connect('http://127.0.0.1:5000/test');
 
     socketio.on('connect', function() {
         socketio.emit('connection', {data: 'Web client connected', client: 'web'});
@@ -31,12 +31,12 @@ $(document).ready(function() {
     $('#increment').click(function() {
         counter++;
         $('#web-count > span').text(counter);
-        socketio.emit('');
+        socketio.emit('update-from-web', {data: counter});
     });
 
     $('#decrement').click(function() {
         counter--;
         $('#web-count > span').text(counter);
-        socketio.emit('');
+        socketio.emit('update-from-web', {data: counter});
     });
 });
