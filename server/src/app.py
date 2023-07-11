@@ -15,28 +15,30 @@ def index():
 
 @socketio.on('connection', namespace='/test')
 def acknowledge_connection(msg):
-    session['receive_count'] = session.get('receive_count', 0) + 1
+    # Database initialization (temporarily using flask `session`)
+    session['mobile_counter'] = 0
+    session['web_counter'] = 0
     emit('log_connection', 
-        {'data': msg['data'], 'count': session['receive_count'], 'client': msg['client']},
+        {'data': msg['data'], 'client': msg['client']},
         broadcast=True)
 
+# TODO: centralized data storage in Flask session
+# ? Handling calculation logic on client side (for now; don't know what's the better approach)
 
+# Handles display of mobileCount on web client
 @socketio.on('update-from-mobile', namespace='/test')
 def mobile_counter_update(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    session['mobile_count'] = session.get('mobile_count', 0) + 1
+    session['mobile_counter'] = message['data']
     emit('response-to-mobile',
-        {'data': message['data'], 'count': session['receive_count'], 'mobileCount': session['mobile_count']},
+        {'data': session['mobile_counter']},
         broadcast=True)
 
-# TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
-
+# Handles display of webCount on mobile client
 @socketio.on('update-from-web', namespace='/test')
 def web_counter_update(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    session['web_count'] = session.get('web_count', 0) + 1
+    session['web_counter'] = message['data']
     emit('response-to-web',
-        {'data': message['data'], 'count': session['receive_count'], 'webCount': session['web_count']},
+        {'data': session['web_counter']},
         broadcast=True)
 
 

@@ -48,12 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() => _mobCount++);
-    sendSocketCounter(_mobCount);
+    sendMobileCounter(_mobCount);
   }
 
   void _decrementCounter() {
     setState(() => _mobCount--);
-    sendSocketCounter(_mobCount);
+    sendMobileCounter(_mobCount);
   }
 
   void disconnect() => socket.emit('disconnect_request');
@@ -63,8 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateWebCountDisplay(message) {
-    setState(() => _webCount = message['data'] as int);
- 
+    setState(() => _webCount = message['data'] as int); 
   }
 
   @override

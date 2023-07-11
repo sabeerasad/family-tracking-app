@@ -26,7 +26,7 @@ $(document).ready(function() {
         return false;
     });
 
-    let counter = 0; // TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
+    // let counter = 0; // TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
 
     $('#increment').click(function() {
         counter++;

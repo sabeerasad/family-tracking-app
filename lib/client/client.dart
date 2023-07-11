@@ -15,9 +15,11 @@ void connectSocket() {
   });
 }
 
-void sendSocketCounter(int counter) => socket.emit(
-      'update-from-mobile',
-      {'data': counter},
-    );
+void sendMobileCounter(int counter) {
+  socket.emit(
+    'update-from-mobile',
+    {'data': counter},
+  );
+}
 
-// TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
+// TODO: centralize data storage in Flask session
