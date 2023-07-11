@@ -36,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     connectSocket();
+    initListeners();
   }
 
   @override
@@ -56,6 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void disconnect() => socket.emit('disconnect_request');
+
+  void initListeners() {
+    socket.on('response-to-web', updateWebCountDisplay);
+  }
+
+  void updateWebCountDisplay(message) {
+    setState(() => _webCount = message['data'] as int);
+ 
+  }
 
   @override
   Widget build(BuildContext context) {

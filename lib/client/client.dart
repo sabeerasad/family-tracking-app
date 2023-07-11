@@ -12,11 +12,6 @@ void connectSocket() {
       'data': 'Flutter client connected',
       'client': 'flutter',
     });
-
-    // * Listeners
-    socket.on('response-to-web', (data) {
-      // TODO: construct handler function to display webCount in app
-    });
   });
 }
 
