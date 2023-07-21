@@ -45,4 +45,4 @@ app.*.map.json
 /android/app/release
 
 # Python Virtual Environment
-/server/env/
+/backend/env/
