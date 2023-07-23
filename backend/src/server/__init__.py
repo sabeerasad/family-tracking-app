@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import database_exists, create_database
 
 
 db = SQLAlchemy()
@@ -8,8 +9,15 @@ DB_NAME = 'database.db'
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '' # ! DON'T SHARE SECRET KEY IN PROD (use environment variables)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:81672943@localhost/{DB_NAME}' # ! use environment variables for username and password in prod
+    app.config['SECRET_KEY'] = ''
+
+    uri = 'mysql+pymysql://{user}:{passwd}@{host}/{db_name}'.format(user='root', passwd='81672943', host='localhost', db_name=DB_NAME) 
+    if not database_exists(uri):
+        create_database(uri)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
+    # ! DON'T SHARE SECRET KEY IN PROD (use environment variables)
+    # ! use environment variables for username and password in prod
     db.init_app(app)
 
     from .routes import routes
@@ -17,5 +25,10 @@ def create_app():
 
     app.register_blueprint(routes, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+
+    from . import models
+
+    with app.app_context():
+        db.create_all()
 
     return app
