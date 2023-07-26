@@ -1,18 +1,24 @@
 from . import db
-from flask_login import UserMixin
-from sqlalchemy.sql import func
 
+# * pseudocode (werkzeug.security for encryption)
+# User
+#   id
+#   firstName
+#   lastName
+#   mobileNumber
+#   email
+#   password
+#   familyId
+#   locationX
+#   locationY
+#   status
 
-class Note(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.String(10000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+# Family
+#   id
+#   member(s)
+#   familyName
 
-
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    first_name = db.Column(db.String(150))
-    notes = db.relationship('Note')
+# TODO: `counter`
+class Counter(db.Model):
+    client = db.Column(db.String)
+    count = db.Column(db.Integer)
