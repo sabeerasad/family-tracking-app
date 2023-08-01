@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     socketio.on('log_connection', function(msg, callback) {
-        $('#log').append('<br>' + $('<li/>').text('log #' + ' (' + msg.client + ') ' + ': ' + msg.data).html());
+        $('#log').append('<br>' + $('<li/>').text('log: ' +  msg.data).html());
         if (callback) {
             callback();
         }
@@ -26,7 +26,7 @@ $(document).ready(function() {
         return false;
     });
 
-    // let counter = 0; // TODO: 2-way communication of `counter` (both, web and mobile counters) with centralized data storage in Flask session
+    let counter = 0;
 
     $('#increment').click(function() {
         counter++;

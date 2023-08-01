@@ -20,5 +20,5 @@ from . import db
 
 # TODO: `counter`
 class Counter(db.Model):
-    client = db.Column(db.String)
-    count = db.Column(db.Integer)
+    client = db.Column(db.String(32))
+    count = db.Column(db.Integer, primary_key=True)
