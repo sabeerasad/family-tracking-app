@@ -1,29 +1,17 @@
 $(document).ready(function() {
 
     // namespace = '/test';
-    var socketio = io.connect('http://127.0.0.1:5000/test');
+    var socket = io.connect('http://127.0.0.1:5000/test');
 
-    socketio.on('connect', function() {
-        socketio.emit('connection', {data: 'Web client connected', client: 'web'});
+    socket.on('connect', function() {
+        socket.emit('connection', {data: 'Web client connected', client: 'web'});
     });
 
-    socketio.on('log_connection', function(msg, callback) {
+    socket.on('log_connection', function(msg, callback) {
         $('#log').append('<br>' + $('<li/>').text('log: ' +  msg.data).html());
         if (callback) {
             callback();
         }
-    });
-
-    socketio.on('response-to-mobile', function(msg, callback) {
-        let count = msg.data;
-        $('#mobile-count > span').text(count);
-        if (callback)
-            callback();
-    })
-
-    $('form#disconnect').submit(function(event) {
-        socketio.emit('disconnect_request');
-        return false;
     });
 
     let counter = 0;
@@ -31,12 +19,26 @@ $(document).ready(function() {
     $('#increment').click(function() {
         counter++;
         $('#web-count > span').text(counter);
-        socketio.emit('update-from-web', {data: counter});
+        // socket.emit('update-from-web', {data: counter});
     });
 
     $('#decrement').click(function() {
         counter--;
         $('#web-count > span').text(counter);
-        socketio.emit('update-from-web', {data: counter});
+        // socket.emit('update-from-web', {data: counter});
     });
 });
+
+//     socket.on('response-to-mobile', function(msg, callback) {
+//         let count = msg.data;
+//         $('#mobile-count > span').text(count);
+//         if (callback)
+//             callback();
+//     })
+
+//     $('form#disconnect').submit(function(event) {
+//         socket.emit('disconnect_request');
+//         return false;
+//     });
+
+// });
